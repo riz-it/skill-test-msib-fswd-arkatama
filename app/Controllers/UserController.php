@@ -8,6 +8,14 @@ use Exception;
 
 class UserController extends BaseController
 {
+    protected $userModel;
+
+    public function __construct()
+    {
+        // Inisialisasi variabel di konstruktor
+        $this->userModel = new UserModel();
+    }
+
     public function index()
     {
         $data = [
@@ -68,8 +76,7 @@ class UserController extends BaseController
                         
                     ];
                   
-                    $save = new UserModel();
-                    if ($save->insert($data)) {
+                    if ($this->userModel->insert($data)) {
                         $msg = [
                             'success' => 'Data berhasil disimpan'
                         ];
@@ -102,10 +109,10 @@ class UserController extends BaseController
 
     public function list()
     {
-        $userModel = new UserModel();
+       
         $data = [
             'title' => 'Daftar User',
-            'users' => $userModel->findAll(),
+            'users' => $this->userModel->findAll(),
             'css' => css([
                 'plugins/daterangepicker/daterangepicker.css',
                 'plugins/jvectormap/jquery-jvectormap-2.0.2.css',
